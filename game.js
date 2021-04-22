@@ -1,3 +1,5 @@
+//original tutorial followed: https://levelup.gitconnected.com/creating-a-simple-2d-game-with-html5-javascript-889aa06035ef
+
 const context = document.querySelector("canvas").getContext("2d");
 context.canvas.height = 960;
 context.canvas.width = 1280;
@@ -104,38 +106,40 @@ const loop = function () {
     
     player.x += player.xVelocity;
     player.y += player.yVelocity;
-    player.xVelocity *= 0.9;// friction
-    player.yVelocity *= 0.9;// friction
 
-    if (player.x <= -1) {
-        player.x = 1280;
-    }
-    if (player.x >= 1281) {
-        player.x = 0;
-    }
-    if (player.y <= -1) {
-        player.y = 960;
-    }
-    if (player.y >= 961) {
-        player.y = 0;
-    }
+    //Friction modifiers
+        player.xVelocity *= 0.9;
+        player.yVelocity *= 0.9;
 
-    
+       
+    //if (player.x <= -1) {
+        //player.x = 1280;
+    //}
+    //if (player.x >= 1281) {
+        //player.x = 0;
+    //}
+    //if (player.y <= -1) {
+        //player.y = 960;
+    //}
+    //if (player.y >= 961) {
+        //player.y = 0;
+   // }
+
     // Creates the backdrop for each frame
-    var background = new Image();
-    background.src = 'Background22.png';
-    var pattern = context.createPattern(background, "no-repeat");
-    context.fillStyle = pattern;
-    context.fillRect(0, 0, 1280, 960); // x, y, width, height
-           
-    context.beginPath();
-    context.drawImage(mouse1and3, player.x, player.y, player.width, player.height);
-    context.fill();
-    
-    window.requestAnimationFrame(loop);
+        var background = new Image();
+        background.src = 'Background22.png'; //BACKGROUND PICTURE
+        context.fillStyle = context.createPattern(background, "no-repeat");
+        context.fillRect(0, 0, 1280, 960); // x POSITION, y POSITION, width, height
+
+    // Draws each frame
+        context.beginPath();
+        context.drawImage(mouse1and3, player.x, player.y, player.width, player.height);
+        context.fill();
+        window.requestAnimationFrame(loop);
 };
-    
-window.addEventListener("keydown", controller.keyListener); //Works with the controls
-window.addEventListener("keyup", controller.keyListener);
+
+// Listens for keyboard controls
+    window.addEventListener("keydown", controller.keyListener); 
+    window.addEventListener("keyup", controller.keyListener);
 
 window.requestAnimationFrame(loop);
