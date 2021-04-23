@@ -1,56 +1,53 @@
 //original tutorial followed: https://levelup.gitconnected.com/creating-a-simple-2d-game-with-html5-javascript-889aa06035ef
-
 const context = document.querySelector("canvas").getContext("2d");
 context.canvas.height = 960;
 context.canvas.width = 1280;
 
-// Start the frame count at 1
+//Start the frame count at 1
 let frameCount = 1;
+
+/*---------------------------------------------------------------------------------------------------------------------------*/
+
 const player = {
-    height: 52, //SIZE OF MOUSE
-    width: 48,
-    x: 616, //STARTING X POSITION
-    xVelocity: 0,
-    y: 454, //STARTING Y POSITION
-    yVelocity: 0
+    height: 52, width: 48, /*SIZE OF MOUSE*/ x: 616, y: 454, /*STARTING POSITION*/ xVelocity: 0, yVelocity: 0 /*STARTING SPEED*/
 };
         
-const nextFrame = () => {
-    // increase the frame / "level" count
+const nextFrame = () => { //increase the frame count (will probably use for levels/difficulty increase)
     frameCount++;
 }
         
 const controller = {
-    left: false,
-    right: false,
-    up: false,
-    down: false,
-    keyListener: function (event) {
-    
-        var key_state = (event.type == "keydown") ? true : false;
-    
-        switch (event.keyCode) {
-    
-        //This is the link for keycodes to change controls http://gcctech.org/csc/javascript/javascript_keycodes.htm
-        //Mouse should use vertical walk cycles for diagonals
+    left: false, right: false, up: false, down: false,
 
-        case 65: //a
-            controller.left = key_state;
-            break;
-        case 87: //w 
-            controller.up = key_state;
-            break;
-        case 68: //d
-            controller.right = key_state;
-            break;
-        case 83: //s
-            controller.down = key_state;
-            break;
+    isFiring: false,
+
+    keyListener: function (event) { //Mouse should use vertical walk cycles for diagonals
+        var key_state = (event.type == "keydown") ? true : false;
+        switch (event.keyCode) {
+            //This is the link for keycodes to change controls http://gcctech.org/csc/javascript/javascript_keycodes.htm
+            
+            case 65: //a
+                controller.left = key_state;
+                break;
+            case 87: //w 
+                controller.up = key_state;
+                break;
+            case 68: //d
+                controller.right = key_state;
+                break;
+            case 83: //s
+                controller.down = key_state;
+                break;
         }
+    },
+
+    mouseAiming: function (event) { //function for mouse control
+        var mouse_state = (event.type == "click");
     }
+
 };
 
-const loop = function () {
+const loop = function () { //Animation tutorial https://dev.to/martyhimmel/animating-sprite-sheets-with-javascript-ag3
     var mouse1and3 = new Image();
     mouse1and3.src = 'mouse_1and3.png';
             
@@ -87,9 +84,8 @@ const loop = function () {
     var mouse16 = new Image();
     mouse16.src = 'mouse_16.png'
 
-
-    var swapPic= new Image();
-    swapPic.src = 'kronk1.png';
+    //var swapPic= new Image();
+    //swapPic.src = 'kronk1.png';
     
     if (controller.up) {
         player.yVelocity -= 1;
@@ -108,38 +104,47 @@ const loop = function () {
     player.y += player.yVelocity;
 
     //Friction modifiers
-        player.xVelocity *= 0.9;
-        player.yVelocity *= 0.9;
+    player.xVelocity *= 0.9;
+    player.yVelocity *= 0.9;
 
-       
-    //if (player.x <= -1) {
-        //player.x = 1280;
-    //}
-    //if (player.x >= 1281) {
-        //player.x = 0;
-    //}
-    //if (player.y <= -1) {
-        //player.y = 960;
-    //}
-    //if (player.y >= 961) {
-        //player.y = 0;
-   // }
+    //Border walls (can be adjusted later)
+    if (player.x <= -1) {
+        player.x = 0;
+        player.xVelocity = 0;
+    }
+    if (player.x >= 1233) {
+        player.x = 1232;
+        player.xVelocity = 0;
+    }
+    if (player.y <= -1) {
+        player.y = 0;
+        player.yVelocity = 0;
+    }
+    if (player.y >= 909) {
+        player.y = 908;
+        player.yVelocity = 0;
+    }
 
-    // Creates the backdrop for each frame
-        var background = new Image();
-        background.src = 'Background22.png'; //BACKGROUND PICTURE
-        context.fillStyle = context.createPattern(background, "no-repeat");
-        context.fillRect(0, 0, 1280, 960); // x POSITION, y POSITION, width, height
+    //Creates the backdrop for each frame
+    var background = new Image();
+    background.src = 'Background22.png'; //BACKGROUND PICTURE
+    context.fillStyle = context.createPattern(background, "no-repeat");
+    context.fillRect(0, 0, 1280, 960); // x POSITION, y POSITION, width, height
 
-    // Draws each frame
-        context.beginPath();
-        context.drawImage(mouse1and3, player.x, player.y, player.width, player.height);
-        context.fill();
-        window.requestAnimationFrame(loop);
+    //Draws each frame
+    context.beginPath();
+    context.drawImage(mouse1and3, player.x, player.y, player.width, player.height);
+    context.fill();
+    window.requestAnimationFrame(loop);
 };
 
-// Listens for keyboard controls
-    window.addEventListener("keydown", controller.keyListener); 
-    window.addEventListener("keyup", controller.keyListener);
+//Listens for keyboard controls
+window.addEventListener("keydown", controller.keyListener); 
+window.addEventListener("keyup", controller.keyListener);
+
+//Listens for computer mouse events    
+window.addEventListener("mousedown", controller.mouseAiming);
+window.addEventListener("mousemove", controller.mouseAiming);
+window.addEventListener("mouseup", controller.mouseAiming);
 
 window.requestAnimationFrame(loop);
