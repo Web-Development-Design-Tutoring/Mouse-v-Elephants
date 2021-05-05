@@ -8,8 +8,9 @@ let frameCount = 1;
 
 /*---------------------------------------------------------------------------------------------------------------------------*/
 
+
 const player = {
-    height: 52, width: 48, /*SIZE OF MOUSE*/ x: 616, y: 454, /*STARTING POSITION*/ xVelocity: 0, yVelocity: 0 /*STARTING SPEED*/
+    /*SIZE OF MOUSE*/ height: 52, width: 48, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 
 };
         
 const nextFrame = () => { //increase the frame count (will probably use for levels/difficulty increase)
@@ -42,12 +43,21 @@ const controller = {
     },
 
     mouseAiming: function (event) { //function for mouse control
-        var mouse_state = (event.type == "click");
+        var mouse_state = (event.type == "mousedown") ? true : false;
+        switch (event.button) {
+            case 0:  //Left mouse click
+                controller.isFiring = mouse_state;
+                break;
     }
+}
 
 };
 
 const loop = function () { //Animation tutorial https://dev.to/martyhimmel/animating-sprite-sheets-with-javascript-ag3
+    
+    var mouseNow = new Image();
+    mouseNow.src = 'mouse_1and3.png';
+
     var mouse1and3 = new Image();
     mouse1and3.src = 'mouse_1and3.png';
             
@@ -84,22 +94,39 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
     var mouse16 = new Image();
     mouse16.src = 'mouse_16.png'
 
-    //var swapPic= new Image();
-    //swapPic.src = 'kronk1.png';
-    
+
     if (controller.up) {
         player.yVelocity -= 1;
+        player.height = 52;
+        player.width = 48;
+        mouseNow.src = mouse14.src;
     }
     if (controller.down) {
         player.yVelocity += 1;
+        player.height = 52;
+        player.width = 48;
+        mouseNow.src = mouse1and3.src;
     }
     if (controller.left) {
         player.xVelocity -= 1;
+        player.height = 48;
+        player.width = 76;
+        mouseNow.src = mouse5and7.src;
+        
     }
     if (controller.right) {
         player.xVelocity += 1;
+        player.height = 48;
+        player.width = 76;
+        mouseNow.src = mouse9and11.src;
     }
     
+    if (controller.isFiring) {
+        player.height += 50;
+    }
+
+    
+
     player.x += player.xVelocity;
     player.y += player.yVelocity;
 
@@ -133,7 +160,7 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
 
     //Draws each frame
     context.beginPath();
-    context.drawImage(mouse1and3, player.x, player.y, player.width, player.height);
+    context.drawImage(mouseNow, player.x, player.y, player.width, player.height);
     context.fill();
     window.requestAnimationFrame(loop);
 };
