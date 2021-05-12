@@ -3,61 +3,8 @@ const context = document.querySelector("canvas").getContext("2d");
 context.canvas.height = 960;
 context.canvas.width = 1280;
 
-//Start the frame count at 1
-let frameCount = 1;
-
-/*---------------------------------------------------------------------------------------------------------------------------*/
-
-
-const player = {
-    /*SIZE OF MOUSE*/ height: 52, width: 48, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 
-};
-        
-const nextFrame = () => { //increase the frame count (will probably use for levels/difficulty increase)
-    frameCount++;
-}
-        
-const controller = {
-    left: false, right: false, up: false, down: false,
-
-    isFiring: false,
-
-    keyListener: function (event) { //Mouse should use vertical walk cycles for diagonals
-        var key_state = (event.type == "keydown") ? true : false;
-        switch (event.keyCode) {
-            //This is the link for keycodes to change controls http://gcctech.org/csc/javascript/javascript_keycodes.htm
-            
-            case 65: //a
-                controller.left = key_state;
-                break;
-            case 87: //w 
-                controller.up = key_state;
-                break;
-            case 68: //d
-                controller.right = key_state;
-                break;
-            case 83: //s
-                controller.down = key_state;
-                break;
-        }
-    },
-
-    mouseAiming: function (event) { //function for mouse control
-        var mouse_state = (event.type == "mousedown") ? true : false;
-        switch (event.button) {
-            case 0:  //Left mouse click
-                controller.isFiring = mouse_state;
-                break;
-    }
-}
-
-};
-
-const loop = function () { //Animation tutorial https://dev.to/martyhimmel/animating-sprite-sheets-with-javascript-ag3
-    
-    var mouseNow = new Image();
-    mouseNow.src = 'mouse_1and3.png';
-
+//Whole bunch of sprites
+    //TODO: WE SHOULD EDIT THE MOUSE SPRITES SO THAT THEY SHARE THE SAME DIMENSIONS
     var mouse1and3 = new Image();
     mouse1and3.src = 'mouse_1and3.png';
             
@@ -94,7 +41,79 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
     var mouse16 = new Image();
     mouse16.src = 'mouse_16.png'
 
+    var cheese = new Image();
+    cheese.src = 'cheese.png'
 
+    var smallEle = new Image();
+    smallEle.src = "elephant1.png"
+
+    var bigEle = new Image();
+    bigEle.src = "bebe.png"
+
+//Start the frame count at 1
+let frameCount = 1;
+
+/*---------------------------------------------------------------------------------------------------------------------------*/
+
+
+const player = {
+    /*SIZE OF MOUSE*/ height: 52, width: 48, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 
+};
+
+const projectile = { //TODO: Make the cheese work
+    /*SIZE OF CHEESE*/ height: 52, width: 48, /*STARTING POSITION*/ x: player.x, y: player.y, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 
+};
+        
+const nextFrame = () => { //increases the frame count (will probably use for levels/difficulty increase)
+    frameCount++;
+}
+        
+const controller = {
+    left: false, right: false, up: false, down: false,
+
+    isFiringUp: false, isFiringDown: false, isFiringLeft: false, isFiringRight: false,
+
+    keyListener: function (event) { //TODO: Mouse should use vertical walk cycles for diagonals
+        var key_state = (event.type == "keydown") ? true : false;
+        switch (event.keyCode) {
+            //This is the link for keycodes to change controls http://gcctech.org/csc/javascript/javascript_keycodes.htm
+            
+            case 65: //a
+                controller.left = key_state;
+                break;
+            case 87: //w 
+                controller.up = key_state;
+                break;
+            case 68: //d
+                controller.right = key_state;
+                break;
+            case 83: //s
+                controller.down = key_state;
+                break;
+
+
+            case 37: //Left
+                controller.isFiringLeft = key_state;
+                break;
+            case 38: //Up
+                controller.isFiringUp = key_state;
+                break;
+            case 39: //Right
+                controller.isFiringRight = key_state;
+                break;
+            case 40: //Down
+                controller.isFiringDown = key_state;
+                break;
+        }
+    }
+
+};
+
+const loop = function () { //Animation tutorial https://dev.to/martyhimmel/animating-sprite-sheets-with-javascript-ag3
+    
+    var mouseNow = new Image();
+    mouseNow.src = 'mouse_1and3.png';
+    
     if (controller.up) {
         player.yVelocity -= 1;
         player.height = 52;
@@ -121,8 +140,21 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
         mouseNow.src = mouse9and11.src;
     }
     
-    if (controller.isFiring) {
-        player.height += 50;
+    
+
+    if (controller.isFiringDown) {
+        projectile.x = player.x;
+        projectile.y = player.y;
+        projectile.yVelocity += 1;
+    }
+    if (controller.isFiringUp) {
+        
+    }
+    if (controller.isFiringLeft) {
+        
+    }
+    if (controller.isFiringRight) {
+        
     }
 
     
@@ -160,7 +192,11 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
 
     //Draws each frame
     context.beginPath();
-    context.drawImage(mouseNow, player.x, player.y, player.width, player.height);
+
+    //TODO: We should change the starting position of the drawImage function to make the player position be the center of the sprite
+    context.drawImage(mouseNow, player.x, player.y, player.width, player.height); 
+    context.drawImage(cheese, projectile.x, projectile.y, projectile.width, projectile.height);
+
     context.fill();
     window.requestAnimationFrame(loop);
 };
