@@ -4,7 +4,6 @@ context.canvas.height = 960;
 context.canvas.width = 1280;
 
 //Whole bunch of sprites
-    //TODO: WE SHOULD EDIT THE MOUSE SPRITES SO THAT THEY SHARE THE SAME DIMENSIONS
     var mouse1and3 = new Image();
     mouse1and3.src = 'mouse_1and3.png';
             
@@ -57,7 +56,8 @@ let frameCount = 1;
 
 
 const player = {
-    /*SIZE OF MOUSE*/ height: 52, width: 48, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 
+    animation:new Animation(),
+    /*SIZE OF MOUSE*/ height: 52, width: 76, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 
 };
 
 const projectile = { //TODO: Make the cheese work
@@ -115,28 +115,24 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
     mouseNow.src = 'mouse_1and3.png';
     
     if (controller.up) {
+        //player.animation.change();
         player.yVelocity -= 1;
-        player.height = 52;
-        player.width = 48;
         mouseNow.src = mouse14.src;
     }
     if (controller.down) {
+        //player.animation.change();
         player.yVelocity += 1;
-        player.height = 52;
-        player.width = 48;
         mouseNow.src = mouse1and3.src;
     }
     if (controller.left) {
+        //player.animation.change();
         player.xVelocity -= 1;
-        player.height = 48;
-        player.width = 76;
         mouseNow.src = mouse5and7.src;
         
     }
     if (controller.right) {
+        //player.animation.change();
         player.xVelocity += 1;
-        player.height = 48;
-        player.width = 76;
         mouseNow.src = mouse9and11.src;
     }
     
@@ -145,22 +141,40 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
     if (controller.isFiringDown) {
         projectile.x = player.x;
         projectile.y = player.y;
-        projectile.yVelocity += 1;
+        projectile.yVelocity = 100;
+        projectile.xVelocity = 0;
     }
     if (controller.isFiringUp) {
-        
+        projectile.x = player.x;
+        projectile.y = player.y;
+        projectile.yVelocity = -100;
+        projectile.xVelocity = 0;
     }
     if (controller.isFiringLeft) {
-        
+        projectile.x = player.x;
+        projectile.y = player.y;
+        projectile.xVelocity = -100;
+        projectile.yVelocity = 0;
     }
     if (controller.isFiringRight) {
-        
+        projectile.x = player.x;
+        projectile.y = player.y;
+        projectile.xVelocity = 100;
+        projectile.yVelocity = 0;
     }
 
     
 
     player.x += player.xVelocity;
     player.y += player.yVelocity;
+
+    projectile.x += projectile.xVelocity;
+    projectile.y += projectile.yVelocity;
+
+    //TODO: Animating the mouse
+    if (frameCount % 6 == 0) {
+        
+    }
 
     //Friction modifiers
     player.xVelocity *= 0.9;
@@ -192,11 +206,8 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
 
     //Draws each frame
     context.beginPath();
-
-    //TODO: We should change the starting position of the drawImage function to make the player position be the center of the sprite
     context.drawImage(mouseNow, player.x, player.y, player.width, player.height); 
     context.drawImage(cheese, projectile.x, projectile.y, projectile.width, projectile.height);
-
     context.fill();
     window.requestAnimationFrame(loop);
 };
@@ -204,10 +215,4 @@ const loop = function () { //Animation tutorial https://dev.to/martyhimmel/anima
 //Listens for keyboard controls
 window.addEventListener("keydown", controller.keyListener); 
 window.addEventListener("keyup", controller.keyListener);
-
-//Listens for computer mouse events    
-window.addEventListener("mousedown", controller.mouseAiming);
-window.addEventListener("mousemove", controller.mouseAiming);
-window.addEventListener("mouseup", controller.mouseAiming);
-
 window.requestAnimationFrame(loop);
