@@ -57,29 +57,34 @@ const loop = function () {
     var mouseNow = new Image(); //Current mouse sprite
     mouseNow.src = 'images/downWalkCycle0.png';
    
-    if (controller.up && controller.right) { //Walking in all eight directions
+    //Walking in all eight directions
+    if (controller.up) {
+        player.yVelocity -= 1.1;
+        direction = 8;
+    } else if (controller.up && controller.right) { 
         player.yVelocity -= 0.75;
         player.xVelocity += 0.75;
         direction = 9;
-    } if (controller.up && controller.left) {
+    } else if (controller.up && controller.left) {
         player.yVelocity -= 0.75;
         player.xVelocity -= 0.75;
         direction = 7;
-    } if (controller.up) {
-        player.yVelocity -= 1.1;
-        direction = 8;
-    }  if (controller.down && controller.right) {
+    }   
+
+    if (controller.down && controller.right) {
         player.yVelocity += 0.75;
         player.xVelocity += 0.75;
         direction = 3;
-    } if (controller.down && controller.left) {
+    } else if (controller.down && controller.left) {
         player.yVelocity += 0.75;
         player.xVelocity -= 0.75;
         direction = 1;
-    } if (controller.down) {
+    } else if (controller.down) {
         player.yVelocity += 1.1;
         direction = 2;
-    }  if (controller.left && !controller.up && !controller.down) {
+    }  
+
+    if (controller.left && !controller.up && !controller.down) {
         player.xVelocity -= 1.1;
         direction = 4;
     } if (controller.right && !controller.up && !controller.down) {
