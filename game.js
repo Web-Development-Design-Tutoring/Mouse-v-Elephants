@@ -5,31 +5,32 @@ var frameCount = 1;
 const context = document.querySelector("canvas").getContext("2d");
 context.canvas.height = 960;
 context.canvas.width = 1280;
-var direction = 5; //NEW VARIABLE; value coresponds to direction on a number pad
+var direction = 5; //NEW VARIABLE: value coresponds to direction on a number pad
 
 //Whole bunch of sprites (Image constructors)
-    //Down walk cycle    
-    var mouse1and3 = new Image(); mouse1and3.src = 'mouse_1and3.png';
-    var mouse2 = new Image(); mouse2.src = 'mouse_2.png'
-    var mouse4 = new Image(); mouse4.src = 'mouse_4.png'
+var downWalkCycle = new Array();
+downWalkCycle[0] = new Image(); downWalkCycle[0].src = 'images/downWalkCycle0.png';
+downWalkCycle[1] = new Image(); downWalkCycle[1].src = 'images/downWalkCycle1.png'
+downWalkCycle[2] = new Image(); downWalkCycle[2].src = 'images/downWalkCycle2.png'
+downWalkCycle[3] = new Image(); downWalkCycle[3].src = 'images/downWalkCycle3.png'
 
-    //Left walk cycle
-    var mouse5and7 = new Image(); mouse5and7.src = 'mouse_5and7.png'
-    var mouse6and8 = new Image(); mouse6and8.src = 'mouse_6and8.png'
+var leftWalkCycle = new Array();
+leftWalkCycle[0] = new Image(); leftWalkCycle[0].src = 'images/leftWalkCycle0.png'
+leftWalkCycle[1] = new Image(); leftWalkCycle[1].src = 'images/leftWalkCycle1.png'
 
-    //Right walk cycle
-    var mouse9and11 = new Image(); mouse9and11.src = 'mouse_9and11.png'
-    var mouse10and12 = new Image(); mouse10and12.src = 'mouse_10and12.png'
+var rightWalkCycle = new Array();
+rightWalkCycle[0] = new Image(); rightWalkCycle[0].src = 'images/rightWalkCycle0.png' 
+rightWalkCycle[1] = new Image(); rightWalkCycle[1].src = 'images/rightWalkCycle0.png'
 
-    //Up walk cycle
-    var mouse13and15 = new Image(); mouse13and15.src = 'mouse_13and15.png'
-    var mouse14 = new Image(); mouse14.src = 'mouse_14.png'
-    var mouse16 = new Image(); mouse16.src = 'mouse_16.png'
+var upWalkCycle = new Array();
+upWalkCycle[0] = new Image(); upWalkCycle[0].src = 'images/upWalkCycle0.png';
+upWalkCycle[1] = new Image(); upWalkCycle[1].src = 'images/upWalkCycle1.png'
+upWalkCycle[2] = new Image(); upWalkCycle[2].src = 'images/upWalkCycle2.png'
+upWalkCycle[3] = new Image(); upWalkCycle[3].src = 'images/upWalkCycle3.png'
 
-    //Other
-    var cheese = new Image(); cheese.src = 'cheese.png'
-    var smallEle = new Image(); smallEle.src = "elephant1.png"
-    var bigEle = new Image(); bigEle.src = "bebe.png"
+var cheese = new Image(); cheese.src = 'images/cheese.png'
+var smallEle = new Image(); smallEle.src = "images/elephant1.png"
+var bigEle = new Image(); bigEle.src = "images/bebe.png"
 
 const player = { /*SIZE OF MOUSE*/ height: 52, width: 76, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 const projectile = { /*SIZE OF CHEESE*/ height: 52, width: 48, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
@@ -47,7 +48,6 @@ const controller = {
             case 87: controller.up = key_state; break; //w 
             case 68: controller.right = key_state; break; //d
             case 83: controller.down = key_state; break; //s
-                
             case 32: controller.isFiring = key_state; break; //Space
         }
     }
@@ -59,42 +59,38 @@ const loop = function () {
     if (controller.up && controller.right) { //Walking in all eight directions
         player.yVelocity -= 0.75;
         player.xVelocity += 0.75;
-        mouseNow.src = mouse14.src;
         direction = 9;
+        mouseNow.src = upWalkCycle[2];
+    } else if (controller.up) {
+        player.yVelocity -= 1.1;
+        direction = 8;
+        mouseNow.src = upWalkCycle[0];
     } else if (controller.up && controller.left) {
         player.yVelocity -= 0.75;
         player.xVelocity -= 0.75;
-        mouseNow.src = mouse14.src;
         direction = 7;
+        mouseNow.src = upWalkCycle[1];
     } else if (controller.down && controller.right) {
         player.yVelocity += 0.75;
         player.xVelocity += 0.75;
-        mouseNow.src = mouse1and3.src;
         direction = 3;
+        mouseNow.src = downWalkCycle[2];
+    } else if (controller.down) {
+        player.yVelocity += 1.1;
+        direction = 2;
+        mouseNow.src = downWalkCycle[0];
     } else if (controller.down && controller.left) {
         player.yVelocity += 0.75;
         player.xVelocity -= 0.75;
-        mouseNow.src = mouse1and3.src;
         direction = 1;
-    } else if (controller.up) {
-        player.yVelocity -= 1.1;
-        mouseNow.src = mouse14.src;
-        direction = 8;
-    } else if (controller.down) {
-        player.yVelocity += 1.1;
-        mouseNow.src = mouse1and3.src;
-        direction = 2;
+        mouseNow.src = downWalkCycle[1];
     } else if (controller.left) {
         player.xVelocity -= 1.1;
-        mouseNow.src = mouse5and7.src;
         direction = 4;
     } else if (controller.right) {
         player.xVelocity += 1.1;
-        mouseNow.src = mouse9and11.src;
         direction = 6;
-    } else {
-        mouseNow.src = mouse1and3.src;
-    }
+    } 
 
     if (controller.isFiring && direction == 1) {//Firing in all eight directions 
         projectile.x = player.x;
@@ -156,7 +152,7 @@ const loop = function () {
 
     //Creates the backdrop for each frame
         var background = new Image();
-        background.src = 'Background22.png'; //BACKGROUND PICTURE
+        background.src = 'images/Background22.png'; //BACKGROUND PICTURE
         context.fillStyle = context.createPattern(background, "no-repeat");
         context.fillRect(0, 0, 1280, 960); // x POSITION, y POSITION, width, height
 
