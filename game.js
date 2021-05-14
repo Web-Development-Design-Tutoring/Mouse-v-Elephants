@@ -61,25 +61,25 @@ const loop = function () {
         player.yVelocity -= 0.75;
         player.xVelocity += 0.75;
         direction = 9;
-    } else if (controller.up) {
-        player.yVelocity -= 1.1;
-        direction = 8;
     } else if (controller.up && controller.left) {
         player.yVelocity -= 0.75;
         player.xVelocity -= 0.75;
         direction = 7;
-    } else if (controller.down && controller.right) {
+    } else if (controller.up) {
+        player.yVelocity -= 1.1;
+        direction = 8;
+    }  else if (controller.down && controller.right) {
         player.yVelocity += 0.75;
         player.xVelocity += 0.75;
         direction = 3;
-    } else if (controller.down) {
-        player.yVelocity += 1.1;
-        direction = 2;
     } else if (controller.down && controller.left) {
         player.yVelocity += 0.75;
         player.xVelocity -= 0.75;
         direction = 1;
-    } else if (controller.left) {
+    } else if (controller.down) {
+        player.yVelocity += 1.1;
+        direction = 2;
+    }  else if (controller.left) {
         player.xVelocity -= 1.1;
         direction = 4;
     } else if (controller.right) {
