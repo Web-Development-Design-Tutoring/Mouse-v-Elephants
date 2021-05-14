@@ -58,7 +58,7 @@ const loop = function () {
     mouseNow.src = 'images/downWalkCycle0.png';
    
     //Walking in all eight directions
-    if (controller.up) {
+    if (controller.up && !controller.right && !controller.left) {
         player.yVelocity -= 1.1;
         direction = 8;
     } else if (controller.up && controller.right) { 
@@ -79,7 +79,7 @@ const loop = function () {
         player.yVelocity += 0.75;
         player.xVelocity -= 0.75;
         direction = 1;
-    } else if (controller.down) {
+    } else if (controller.down && !controller.right && !controller.left) {
         player.yVelocity += 1.1;
         direction = 2;
     }  
