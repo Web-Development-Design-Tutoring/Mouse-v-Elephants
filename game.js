@@ -1,10 +1,8 @@
 //ORIGINAL TUTORIAL FOLLOWED: https://levelup.gitconnected.com/creating-a-simple-2d-game-with-html5-javascript-889aa06035ef
-const context = document.querySelector("canvas").getContext("2d");
-context.canvas.width = 1280; context.canvas.height = 960;
+const context = document.querySelector("canvas").getContext("2d"); context.canvas.width = 1280; context.canvas.height = 960;
 const player = { /*SIZE OF MOUSE*/ height: 52, width: 76, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 const projectile = { /*SIZE OF CHEESE*/ height: 52, width: 48, /*STARTING POSITION*/ x: -100, y: -100, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-var frameCount = 1;
-const nextFrame = () => { frameCount++; } //increases the frame count (will probably use for levels/difficulty increase)
+var frameCount = 1; const nextFrame = () => { frameCount++; } //increases the frame count (will probably use for levels/difficulty increase)
 
 //Whole bunch of sprites (Image constructors) in ARRAYS (one for each cardinal direction walk cycle)
 var upWalkCycle = new Array();
@@ -23,15 +21,13 @@ var leftWalkCycle = new Array();
 var rightWalkCycle = new Array();
     rightWalkCycle[0] = new Image(); rightWalkCycle[0].src = 'images/rightWalkCycle0.png';
     rightWalkCycle[1] = new Image(); rightWalkCycle[1].src = 'images/rightWalkCycle0.png';
-
-//Other random sprites
+//Non-mouse Sprites
 var cheese = new Image(); cheese.src = 'images/cheese.png';
 var smallEle = new Image(); smallEle.src = "images/elephant1.png";
 var bigEle = new Image(); bigEle.src = "images/bebe.png";
 
 const controller = {
-    left: false, right: false, up: false, down: false, //Mouse walking controls
-    isFiring: false, //Cheese firing controls
+    left: false, right: false, up: false, down: false, isFiring: false, 
     keyListener: function (event) { //This is the link for keycodes to change controls http://gcctech.org/csc/javascript/javascript_keycodes.htm
         var key_state = (event.type == "keydown") ? true : false;
         switch (event.keyCode) {
@@ -66,6 +62,11 @@ const loop = function () {//GAMEPLAY LOGIC
     } if (controller.right && !controller.up && !controller.down) {
         player.xVelocity += 1.1; direction = 6;
     }
+
+    /*
+    TODO: Add the animation here base it on the direction that the mouse is facing.
+    Change sprites every 6 frames (modulo). Cycle through the arrays by changing the index.
+    */
 
     if (controller.isFiring && direction == 1) {//Firing in all eight directions //TODO: Make the cheese fire-able only once until it hits the wall
         projectile.x = player.x; projectile.y = player.y;
