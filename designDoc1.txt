@@ -1,0 +1,15 @@
+Elephants walking in from any of the borders
+Spawn randomly
+
+Randomly spawn the big ones throughout on a timer (5 to win)
+
+need a start, end, and death screen
+
+One touch death
+one cheese to kill small, two cheese to kill beeg
+
+4 pages
+-start
+-game
+-win
+-lose
