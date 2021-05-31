@@ -2,7 +2,15 @@
 const context = document.querySelector("canvas").getContext("2d"); context.canvas.width = 1280; context.canvas.height = 960;
 const player = { /*SIZE OF MOUSE*/ height: 52, width: 76, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 const projectile = { /*SIZE OF CHEESE*/ height: 52, width: 48, /*STARTING POSITION*/ x: -100, y: -100, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+
+const enemy0  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy1  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy2  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy3  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy4  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+
 const background = new Image(); background.src = 'images/Background22.png'; //BACKGROUND PICTURE
+
 var frameCount = 1; const nextFrame = () => { frameCount++; } //increases the frame count (will probably use for levels/difficulty increase)
 var frameIndex = 0;
 var realIndex = 0;
@@ -34,7 +42,13 @@ var rightWalkCycle = new Array();
 
 //Non Mouse Sprites
 var cheese = new Image(); cheese.src = 'images/cheese.png';
-var smallEle = new Image(); smallEle.src = "images/elephant1.png";
+
+var smallEle0 = new Image(); smallEle0.src = "images/elephant1.png";
+var smallEle1 = new Image(); smallEle1.src = "images/elephant1.png";
+var smallEle2 = new Image(); smallEle2.src = "images/elephant1.png";
+var smallEle3 = new Image(); smallEle3.src = "images/elephant1.png";
+var smallEle4 = new Image(); smallEle4.src = "images/elephant1.png";
+
 var bigEle = new Image(); bigEle.src = "images/bebe.png";
 
 const controller = {
@@ -109,6 +123,12 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
     context.beginPath();
     context.drawImage(cheese, projectile.x, projectile.y, projectile.width, projectile.height);
     context.drawImage(mouseNow, player.x, player.y, player.width, player.height); 
+    context.drawImage(smallEle0, enemy0.x, enemy0.y, enemy0.width, enemy0.height); 
+    context.drawImage(smallEle1, enemy1.x, enemy1.y, enemy1.width, enemy1.height);
+    context.drawImage(smallEle2, enemy2.x, enemy2.y, enemy2.width, enemy2.height);
+    context.drawImage(smallEle3, enemy3.x, enemy3.y, enemy3.width, enemy3.height);
+    context.drawImage(smallEle4, enemy4.x, enemy4.y, enemy4.width, enemy4.height);
+
     context.fill();
     
     window.requestAnimationFrame(loop);
