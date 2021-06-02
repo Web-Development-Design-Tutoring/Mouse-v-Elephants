@@ -3,11 +3,11 @@ const context = document.querySelector("canvas").getContext("2d"); context.canva
 const player = { /*SIZE OF MOUSE*/ height: 52, width: 76, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 const projectile = { /*SIZE OF CHEESE*/ height: 52, width: 48, /*STARTING POSITION*/ x: -100, y: -100, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 
-const enemy0  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 10, y: 10, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-const enemy1  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 1220, y: 10, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-const enemy2  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 10, y: 900, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-const enemy3  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 1220, y: 900, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-const enemy4  = { /*SIZE OF ELEPHANT*/ height: 97, width: 135, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy0  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy1  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy2  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy3  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const enemy4  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 
 const background = new Image(); background.src = 'images/Background22.png'; //BACKGROUND PICTURE
 
