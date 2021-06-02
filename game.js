@@ -9,6 +9,8 @@ const enemy2  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITI
 const enemy3  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 const enemy4  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 
+const bigElephant = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+
 const background = new Image(); background.src = 'images/Background22.png'; //BACKGROUND PICTURE
 
 var frameCount = 1; const nextFrame = () => { frameCount++; } //increases the frame count (will probably use for levels/difficulty increase)
