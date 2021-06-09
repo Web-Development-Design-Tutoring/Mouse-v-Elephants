@@ -3,11 +3,12 @@ const context = document.querySelector("canvas").getContext("2d"); context.canva
 const player = { /*SIZE OF MOUSE*/ height: 52, width: 76, /*STARTING POSITION*/ x: 616, y: 454, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 const projectile = { /*SIZE OF CHEESE*/ height: 52, width: 48, /*STARTING POSITION*/ x: -100, y: -100, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 
-const enemy0  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-const enemy1  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-const enemy2  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-const enemy3  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-const enemy4  = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const smallEle = new Array();
+    smallEle[0] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+    smallEle[1] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+    smallEle[2] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+    smallEle[3] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+    smallEle[4] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 
 const bigElephant = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 
@@ -45,13 +46,11 @@ var rightWalkCycle = new Array();
 //Non Mouse Sprites
 var cheese = new Image(); cheese.src = 'images/cheese.png';
 
-var smallEle0 = new Image(); smallEle0.src = "images/elephant1.png";
-var smallEle1 = new Image(); smallEle1.src = "images/elephant1.png";
-var smallEle2 = new Image(); smallEle2.src = "images/elephant1.png";
-var smallEle3 = new Image(); smallEle3.src = "images/elephant1.png";
-var smallEle4 = new Image(); smallEle4.src = "images/elephant1.png";
-
+var eleSmall = new Image(); eleSmall.src = "images/elephant1.png";
 var bigEle = new Image(); bigEle.src = "images/bebe.png";
+
+var eleCount = 0;
+var whichEle = 0;
 
 const controller = {
     left: false, right: false, up: false, down: false, isFiring: false, 
@@ -72,6 +71,9 @@ const controller = {
         }
     }
 };
+
+var x = [-1280, 640, 2560];
+var y = [-720, 1440];
 
 const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish times a second)
     var mouseNow = new Image(); mouseNow.src = 'images/downWalkCycle0.png'; //Represents current mouse sprite
@@ -108,9 +110,40 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
         else if (direction == 6) { mouseNow.src = rightWalkCycle[realIndex].src; } 
         else if (direction == 7 || direction == 8 || direction == 9) { mouseNow.src = upWalkCycle[realIndex].src; }
     
+    whichEle += 1;
+    if (whichEle == 4) {
+        whichEle = -1;
+    }
+
+    eleCount += 1;
+    if (eleCount == 60) {
+        smallEle[whichEle].x = x[Math.floor(Math.random() * x.length)];
+
+        if (smallEle[whichEle].x == -1280 || smallEle[whichEle].x == 2560) {
+            smallEle[whichEle].y = 360;
+        }
+        if (smallEle[whichEle].x == 640) {
+            smallEle[whichEle].y = y[Math.floor(Math.random() * y.length)];
+        }
+
+        eleCount = 0;
+    }
+
     //Updates positions based on velocity gained or lost. Velocity is pixels per frame
     player.x += player.xVelocity; player.xVelocity *= 0.9;
     player.y += player.yVelocity; player.yVelocity *= 0.9;
+
+    smallEle[0].x += smallEle[0].xVelocity; smallEle[0].xVelocity *= 0.9;//TODO: Make a game speed variable that correlates to the enemy speed
+    smallEle[0].y += smallEle[0].yVelocity; smallEle[0].yVelocity *= 0.9;
+    smallEle[1].x += smallEle[1].xVelocity; smallEle[1].xVelocity *= 0.9;
+    smallEle[1].y += smallEle[1].yVelocity; smallEle[1].yVelocity *= 0.9;
+    smallEle[2].x += smallEle[2].xVelocity; smallEle[2].xVelocity *= 0.9;
+    smallEle[2].y += smallEle[2].yVelocity; smallEle[2].yVelocity *= 0.9;
+    smallEle[3].x += smallEle[3].xVelocity; smallEle[3].xVelocity *= 0.9;
+    smallEle[3].y += smallEle[3].yVelocity; smallEle[3].yVelocity *= 0.9;
+    smallEle[4].x += smallEle[4].xVelocity; smallEle[4].xVelocity *= 0.9;
+    smallEle[4].y += smallEle[4].yVelocity; smallEle[4].yVelocity *= 0.9;
+
     projectile.x += projectile.xVelocity;
     projectile.y += projectile.yVelocity;
     
@@ -125,11 +158,12 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
     context.beginPath();
     context.drawImage(cheese, projectile.x, projectile.y, projectile.width, projectile.height);
     context.drawImage(mouseNow, player.x, player.y, player.width, player.height); 
-    context.drawImage(smallEle0, enemy0.x, enemy0.y, enemy0.width, enemy0.height); 
-    context.drawImage(smallEle1, enemy1.x, enemy1.y, enemy1.width, enemy1.height);
-    context.drawImage(smallEle2, enemy2.x, enemy2.y, enemy2.width, enemy2.height);
-    context.drawImage(smallEle3, enemy3.x, enemy3.y, enemy3.width, enemy3.height);
-    context.drawImage(smallEle4, enemy4.x, enemy4.y, enemy4.width, enemy4.height);
+
+    context.drawImage(eleSmall, smallEle[0].x, smallEle[0].y, smallEle[0].width, smallEle[0].height); 
+    context.drawImage(eleSmall, smallEle[1].x, smallEle[1].y, smallEle[1].width, smallEle[1].height);
+    context.drawImage(eleSmall, smallEle[2].x, smallEle[2].y, smallEle[2].width, smallEle[2].height);
+    context.drawImage(eleSmall, smallEle[3].x, smallEle[3].y, smallEle[3].width, smallEle[3].height);
+    context.drawImage(eleSmall, smallEle[4].x, smallEle[4].y, smallEle[4].width, smallEle[4].height);
 
     context.fill();
     
