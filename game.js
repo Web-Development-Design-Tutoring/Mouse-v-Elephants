@@ -115,6 +115,7 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
         whichEle = -1;
     }
 
+    //Elephant Spawning 
     eleCount += 1;
     if (eleCount == 60) {
         smallEle[whichEle].x = x[Math.floor(Math.random() * x.length)];
@@ -128,6 +129,9 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
 
         eleCount = 0;
     }
+
+    //Elephants moving
+        smallEle[0]
 
     //Updates positions based on velocity gained or lost. Velocity is pixels per frame
     player.x += player.xVelocity; player.xVelocity *= 0.9;
