@@ -4,11 +4,11 @@ const player = { /*SIZE OF MOUSE*/ height: 52, width: 76, /*STARTING POSITION*/ 
 const projectile = { /*SIZE OF CHEESE*/ height: 52, width: 48, /*STARTING POSITION*/ x: -100, y: -100, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 
 const smallEle = new Array();
-    smallEle[0] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-    smallEle[1] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-    smallEle[2] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-    smallEle[3] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
-    smallEle[4] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+    smallEle[0] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0, spawned: false };
+    smallEle[1] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0, spawned: false };
+    smallEle[2] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0, spawned: false };
+    smallEle[3] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0, spawned: false };
+    smallEle[4] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0, spawned: false };
 
 const bigElephant = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
 
@@ -110,6 +110,7 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
         else if (direction == 6) { mouseNow.src = rightWalkCycle[realIndex].src; } 
         else if (direction == 7 || direction == 8 || direction == 9) { mouseNow.src = upWalkCycle[realIndex].src; }
     
+    //Elephant Indexing
     whichEle += 1;
     if (whichEle == 4) {
         whichEle = -1;
@@ -131,7 +132,45 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
     }
 
     //Elephants moving
-        smallEle[0]
+        if (smallEle[0].x < player.x) { smallEle[0].xVelocity += 1; }
+        if (smallEle[0].x > player.x) { smallEle[0].xVelocity -= 1; }
+        if (smallEle[0].x == player.x) { smallEle[0].xVelocity = 0; }
+
+        if (smallEle[0].y < player.y) { smallEle[0].yVelocity += 1; }
+        if (smallEle[0].y > player.y) { smallEle[0].yVelocity -= 1; }
+        if (smallEle[0].y == player.y) { smallEle[0].yVelocity = 0; }
+
+        if (smallEle[1].x < player.x) { smallEle[1].xVelocity += 1; }
+        if (smallEle[1].x > player.x) { smallEle[1].xVelocity -= 1; }
+        if (smallEle[1].x == player.x) { smallEle[1].xVelocity = 0; }
+
+        if (smallEle[1].y < player.y) { smallEle[1].yVelocity += 1; }
+        if (smallEle[1].y > player.y) { smallEle[1].yVelocity -= 1; }
+        if (smallEle[1].y == player.y) { smallEle[1].yVelocity = 0; }
+        
+        if (smallEle[2].x < player.x) { smallEle[2].xVelocity += 1; }
+        if (smallEle[2].x > player.x) { smallEle[2].xVelocity -= 1; }
+        if (smallEle[2].x == player.x) { smallEle[2].xVelocity = 0; }
+
+        if (smallEle[2].y < player.y) { smallEle[2].yVelocity += 1; }
+        if (smallEle[2].y > player.y) { smallEle[2].yVelocity -= 1; }
+        if (smallEle[2].y == player.y) { smallEle[2].yVelocity = 0; }
+
+        if (smallEle[3].x < player.x) { smallEle[3].xVelocity += 1; }
+        if (smallEle[3].x > player.x) { smallEle[3].xVelocity -= 1; }
+        if (smallEle[3].x == player.x) { smallEle[3].xVelocity = 0; }
+
+        if (smallEle[3].y < player.y) { smallEle[3].yVelocity += 1; }
+        if (smallEle[3].y > player.y) { smallEle[3].yVelocity -= 1; }
+        if (smallEle[3].y == player.y) { smallEle[3].yVelocity = 0; }
+
+        if (smallEle[4].x < player.x) { smallEle[4].xVelocity += 1; }
+        if (smallEle[4].x > player.x) { smallEle[4].xVelocity -= 1; }
+        if (smallEle[4].x == player.x) { smallEle[4].xVelocity = 0; }
+
+        if (smallEle[4].y < player.y) { smallEle[4].yVelocity += 1; }
+        if (smallEle[4].y > player.y) { smallEle[4].yVelocity -= 1; }
+        if (smallEle[4].y == player.y) { smallEle[4].yVelocity = 0; }
 
     //Updates positions based on velocity gained or lost. Velocity is pixels per frame
     player.x += player.xVelocity; player.xVelocity *= 0.9;
@@ -163,7 +202,7 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
     context.drawImage(cheese, projectile.x, projectile.y, projectile.width, projectile.height);
     context.drawImage(mouseNow, player.x, player.y, player.width, player.height); 
 
-    context.drawImage(eleSmall, smallEle[0].x, smallEle[0].y, smallEle[0].width, smallEle[0].height); 
+    context.drawImage(eleSmall, smallEle[0].x, smallEle[0].y, smallEle[0].width, smallEle[0].height); //TODO: Multiple elephant sprites
     context.drawImage(eleSmall, smallEle[1].x, smallEle[1].y, smallEle[1].width, smallEle[1].height);
     context.drawImage(eleSmall, smallEle[2].x, smallEle[2].y, smallEle[2].width, smallEle[2].height);
     context.drawImage(eleSmall, smallEle[3].x, smallEle[3].y, smallEle[3].width, smallEle[3].height);
