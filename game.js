@@ -198,6 +198,10 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
             eleDefeated += 1;
         }
 
+        if (eleDefeated >= 20) {
+            window.location.replace("win.html");
+        }
+
     //Updates positions based on velocity gained or lost. Velocity is pixels per frame
     player.x += player.xVelocity; player.xVelocity *= 0.9;
     player.y += player.yVelocity; player.yVelocity *= 0.9;
