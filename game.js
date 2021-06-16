@@ -172,27 +172,27 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
         if (smallEle[4].y == player.y) { smallEle[4].yVelocity = 0; }
 
         //Elephant Collision
-        if (smallEle[0].x <= (projectile.x + 80) && smallEle[0].x >= (projectile.x - 20) && smallEle[0].y <= (projectile.y + 80) && smallEle[0].y >= (projectile.y - 20)) {
+        if (smallEle[0].x <= (projectile.x + 100) && smallEle[0].x >= (projectile.x - 50) && smallEle[0].y <= (projectile.y + 100) && smallEle[0].y >= (projectile.y - 50)) {
             smallEle[0].x = 3000; smallEle[0].y = 3000;
             smallEle[0].spawned = false;
             eleDefeated += 1;
         }
-        if (smallEle[1].x <= (projectile.x + 80) && smallEle[1].x >= (projectile.x - 20) && smallEle[1].y <= (projectile.y + 80) && smallEle[1].y >= (projectile.y - 20)) {
+        if (smallEle[1].x <= (projectile.x + 100) && smallEle[1].x >= (projectile.x - 50) && smallEle[1].y <= (projectile.y + 100) && smallEle[1].y >= (projectile.y - 50)) {
             smallEle[1].x = 3000; smallEle[0].y = 3000;
             smallEle[1].spawned = false;
             eleDefeated += 1;
         }
-        if (smallEle[2].x <= (projectile.x + 80) && smallEle[2].x >= (projectile.x - 20) && smallEle[2].y <= (projectile.y + 80) && smallEle[2].y >= (projectile.y - 20)) {
+        if (smallEle[2].x <= (projectile.x + 100) && smallEle[2].x >= (projectile.x - 50) && smallEle[2].y <= (projectile.y + 100) && smallEle[2].y >= (projectile.y - 50)) {
             smallEle[2].x = 3000; smallEle[2].y = 3000;
             smallEle[2].spawned = false;
             eleDefeated += 1;
         }
-        if (smallEle[3].x <= (projectile.x + 80) && smallEle[3].x >= (projectile.x - 20) && smallEle[3].y <= (projectile.y + 80) && smallEle[3].y >= (projectile.y - 20)) {
+        if (smallEle[3].x <= (projectile.x + 100) && smallEle[3].x >= (projectile.x - 50) && smallEle[3].y <= (projectile.y + 100) && smallEle[3].y >= (projectile.y - 50)) {
             smallEle[3].x = 3000; smallEle[0].y = 3000;
             smallEle[3].spawned = false;
             eleDefeated += 1;
         }
-        if (smallEle[4].x <= (projectile.x + 80) && smallEle[4].x >= (projectile.x - 20) && smallEle[4].y <= (projectile.y + 80) && smallEle[4].y >= (projectile.y - 20)) {
+        if (smallEle[4].x <= (projectile.x + 100) && smallEle[4].x >= (projectile.x - 50) && smallEle[4].y <= (projectile.y + 100) && smallEle[4].y >= (projectile.y - 50)) {
             smallEle[4].x = 3000; smallEle[0].y = 3000;
             smallEle[4].spawned = false;
             eleDefeated += 1;
