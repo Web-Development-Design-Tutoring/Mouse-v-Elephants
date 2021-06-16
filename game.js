@@ -17,6 +17,7 @@ const background = new Image(); background.src = 'images/Background22.png'; //BA
 var frameCount = 1; const nextFrame = () => { frameCount++; } //increases the frame count (will probably use for levels/difficulty increase)
 var frameIndex = 0;
 var realIndex = 0;
+var eleDefeated = 0;
 
 //Whole bunch of sprites (Image constructors) in ARRAYS (one for each cardinal direction walk cycle)
 var upWalkCycle = new Array();
@@ -115,27 +116,18 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
         else if (direction == 6) { mouseNow.src = rightWalkCycle[realIndex].src; } 
         else if (direction == 7 || direction == 8 || direction == 9) { mouseNow.src = upWalkCycle[realIndex].src; }
     
-    
-
     //Elephant Spawning 
     eleCount += 1;
     if (eleCount == 120) {
-        smallEle[whichEle].x = x[Math.floor(Math.random() * x.length)];
-
-        if (smallEle[whichEle].x == -1280 || smallEle[whichEle].x == 2560) {
-            smallEle[whichEle].y = 360;
+        if (smallEle[whichEle].spawned == false) {
+            smallEle[whichEle].x = x[Math.floor(Math.random() * x.length)];
+            if (smallEle[whichEle].x == -1280 || smallEle[whichEle].x == 2560) { smallEle[whichEle].y = 360; }
+            if (smallEle[whichEle].x == 640) { smallEle[whichEle].y = y[Math.floor(Math.random() * y.length)]; }
+            smallEle[whichEle].spawned = true;
+            whichEle += 1;
+            if (whichEle == 4) { whichEle = 0; }
         }
-        if (smallEle[whichEle].x == 640) {
-            smallEle[whichEle].y = y[Math.floor(Math.random() * y.length)];
-        }
-
         eleCount = 0;
-
-        //Elephant Indexing
-        whichEle += 1;
-        if (whichEle == 4) {
-            whichEle = 0;
-        }
     }
 
     //Elephants moving
@@ -179,20 +171,47 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
         if (smallEle[4].y > player.y) { smallEle[4].yVelocity -= 1; }
         if (smallEle[4].y == player.y) { smallEle[4].yVelocity = 0; }
 
+        //Elephant Collision
+        if (smallEle[0].x <= (projectile.x + 64) && smallEle[0].x >= (projectile.x) && smallEle[0].y <= (projectile.y + 58) && smallEle[0].y >= (projectile.y)) {
+            smallEle[0].x = 3000; smallEle[0].y = 3000;
+            smallEle[0].spawned = false;
+            eleDefeated += 1;
+        }
+        if (smallEle[1].x <= (projectile.x + 64) && smallEle[1].x >= (projectile.x) && smallEle[1].y <= (projectile.y + 58) && smallEle[1].y >= (projectile.y)) {
+            smallEle[1].x = 3000; smallEle[0].y = 3000;
+            smallEle[1].spawned = false;
+            eleDefeated += 1;
+        }
+        if (smallEle[2].x <= (projectile.x + 64) && smallEle[2].x >= (projectile.x) && smallEle[2].y <= (projectile.y + 58) && smallEle[2].y >= (projectile.y)) {
+            smallEle[2].x = 3000; smallEle[2].y = 3000;
+            smallEle[2].spawned = false;
+            eleDefeated += 1;
+        }
+        if (smallEle[3].x <= (projectile.x + 64) && smallEle[3].x >= (projectile.x) && smallEle[3].y <= (projectile.y + 58) && smallEle[3].y >= (projectile.y)) {
+            smallEle[3].x = 3000; smallEle[0].y = 3000;
+            smallEle[3].spawned = false;
+            eleDefeated += 1;
+        }
+        if (smallEle[4].x <= (projectile.x + 64) && smallEle[4].x >= (projectile.x) && smallEle[4].y <= (projectile.y + 58) && smallEle[4].y >= (projectile.y)) {
+            smallEle[4].x = 3000; smallEle[0].y = 3000;
+            smallEle[4].spawned = false;
+            eleDefeated += 1;
+        }
+
     //Updates positions based on velocity gained or lost. Velocity is pixels per frame
     player.x += player.xVelocity; player.xVelocity *= 0.9;
     player.y += player.yVelocity; player.yVelocity *= 0.9;
 
-    smallEle[0].x += smallEle[0].xVelocity; smallEle[0].xVelocity *= 0.7;//TODO: Make a game speed variable that correlates to the enemy speed
-    smallEle[0].y += smallEle[0].yVelocity; smallEle[0].yVelocity *= 0.7;
-    smallEle[1].x += smallEle[1].xVelocity; smallEle[1].xVelocity *= 0.7;
-    smallEle[1].y += smallEle[1].yVelocity; smallEle[1].yVelocity *= 0.7;
-    smallEle[2].x += smallEle[2].xVelocity; smallEle[2].xVelocity *= 0.7;
-    smallEle[2].y += smallEle[2].yVelocity; smallEle[2].yVelocity *= 0.7;
-    smallEle[3].x += smallEle[3].xVelocity; smallEle[3].xVelocity *= 0.7;
-    smallEle[3].y += smallEle[3].yVelocity; smallEle[3].yVelocity *= 0.7;
-    smallEle[4].x += smallEle[4].xVelocity; smallEle[4].xVelocity *= 0.7;
-    smallEle[4].y += smallEle[4].yVelocity; smallEle[4].yVelocity *= 0.7;
+    smallEle[0].x += smallEle[0].xVelocity; smallEle[0].xVelocity *= 0.85;//TODO: Make a game speed variable that correlates to the enemy speed
+    smallEle[0].y += smallEle[0].yVelocity; smallEle[0].yVelocity *= 0.85;
+    smallEle[1].x += smallEle[1].xVelocity; smallEle[1].xVelocity *= 0.85;
+    smallEle[1].y += smallEle[1].yVelocity; smallEle[1].yVelocity *= 0.85;
+    smallEle[2].x += smallEle[2].xVelocity; smallEle[2].xVelocity *= 0.85;
+    smallEle[2].y += smallEle[2].yVelocity; smallEle[2].yVelocity *= 0.85;
+    smallEle[3].x += smallEle[3].xVelocity; smallEle[3].xVelocity *= 0.85;
+    smallEle[3].y += smallEle[3].yVelocity; smallEle[3].yVelocity *= 0.85;
+    smallEle[4].x += smallEle[4].xVelocity; smallEle[4].xVelocity *= 0.85;
+    smallEle[4].y += smallEle[4].yVelocity; smallEle[4].yVelocity *= 0.85;
 
     projectile.x += projectile.xVelocity;
     projectile.y += projectile.yVelocity;
@@ -209,7 +228,7 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
     context.drawImage(cheese, projectile.x, projectile.y, projectile.width, projectile.height);
     context.drawImage(mouseNow, player.x, player.y, player.width, player.height); 
 
-    context.drawImage(eleSmall, smallEle[0].x, smallEle[0].y, smallEle[0].width, smallEle[0].height); //TODO: Multiple elephant sprites
+    context.drawImage(eleSmall, smallEle[0].x, smallEle[0].y, smallEle[0].width, smallEle[0].height);
     context.drawImage(redSmall, smallEle[1].x, smallEle[1].y, smallEle[1].width, smallEle[1].height);
     context.drawImage(blueSmall, smallEle[2].x, smallEle[2].y, smallEle[2].width, smallEle[2].height);
     context.drawImage(greenSmall, smallEle[3].x, smallEle[3].y, smallEle[3].width, smallEle[3].height);
