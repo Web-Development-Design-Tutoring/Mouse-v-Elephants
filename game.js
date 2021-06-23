@@ -10,7 +10,7 @@ const smallEle = new Array();
     smallEle[3] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0, spawned: false };
     smallEle[4] = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0, spawned: false };
 
-const bigElephant = { /*SIZE OF ELEPHANT*/ height: 86, width: 120, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0 };
+const bigElephant = { /*SIZE OF ELEPHANT*/ height: 150, width: 270, /*STARTING POSITION*/ x: 3000, y: 3000, /*STARTING SPEED*/ xVelocity: 0, yVelocity: 0, spawned: false };
 
 const background = new Image(); background.src = 'images/Background22.png'; //BACKGROUND PICTURE
 
@@ -18,6 +18,7 @@ var frameCount = 1; const nextFrame = () => { frameCount++; } //increases the fr
 var frameIndex = 0;
 var realIndex = 0;
 var eleDefeated = 0;
+var bigDefeated = 0;
 
 //Whole bunch of sprites (Image constructors) in ARRAYS (one for each cardinal direction walk cycle)
 var upWalkCycle = new Array();
@@ -48,10 +49,10 @@ var rightWalkCycle = new Array();
 var cheese = new Image(); cheese.src = 'images/cheese.png';
 
 var eleSmall = new Image(); eleSmall.src = "images/elephant1.png";
-var redSmall = new Image(); redSmall.src = "images/redElephant1.png";
-var blueSmall = new Image(); blueSmall.src = "images/blueElephant1.png";
-var greenSmall = new Image(); greenSmall.src = "images/greenElephant1.png";
-var goldSmall = new Image(); goldSmall.src = "images/goldElephant1.png";
+var redSmall = new Image(); redSmall.src = "images/elephant1.png";
+var blueSmall = new Image(); blueSmall.src = "images/elephant1.png";
+var greenSmall = new Image(); greenSmall.src = "images/elephant1.png";
+var goldSmall = new Image(); goldSmall.src = "images/elephant1.png";
 
 var bigEle = new Image(); bigEle.src = "images/bebe.png";
 
@@ -198,24 +199,101 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
             eleDefeated += 1;
         }
 
-        if (eleDefeated >= 20) {
-            window.location.replace("win.html");
+        if ((eleDefeated == 10 || eleDefeated == 20 || eleDefeated == 30) && bigElephant.spawned == false) {
+            bigElephant.x = 640;
+            bigElephant.y = -720;
+            bigElephant.spawned = true;
         }
+
+        if (bigElephant.x <= (projectile.x + 100) && bigElephant.x >= (projectile.x - 50) && bigElephant.y <= (projectile.y + 100) && bigElephant.y >= (projectile.y - 50)) {
+            bigElephant.x = 3000; bigElephant.y = 3000;
+            bigElephant.spawned = false;
+            bigDefeated += 1;
+        }
+
+        
+        if (bigElephant.x < player.x) { bigElephant.xVelocity += 1; }
+        if (bigElephant.x > player.x) { bigElephant.xVelocity -= 1; }
+        if (bigElephant.x == player.x) { bigElephant.xVelocity = 0; }
+
+        if (bigElephant.y < player.y) { bigElephant.yVelocity += 1; }
+        if (bigElephant.y > player.y) { bigElephant.yVelocity -= 1; }
+        if (bigElephant.y == player.y) { bigElephant.yVelocity = 0; }
+
+    if (bigDefeated >= 3) {
+        window.location.replace("win.html");
+    }
+
+    //Mouse Collision
+    if (player.x >= bigElephant.x && player.x <= (bigElephant.x + 270) && player.y >= bigElephant.y && player.y <= (bigElephant.y + 150)) {
+        window.location.replace("lose.html");
+    }
+    if (player.x >= smallEle[0].x && player.x <= (smallEle[0].x + 120) && player.y >= smallEle[0].y && player.y <= (smallEle[0].y + 86)) {
+        window.location.replace("lose.html");
+    }
+    if (player.x >= smallEle[1].x && player.x <= (smallEle[1].x + 120) && player.y >= smallEle[1].y && smallEle[1].y <= (smallEle[1].y + 86)) {
+        window.location.replace("lose.html");
+    }
+    if (player.x >= smallEle[2].x && player.x <= (smallEle[2].x + 120) && player.y >= smallEle[2].y && player.y <= (smallEle[2].y + 86)) {
+        window.location.replace("lose.html");
+    }
+    if (player.x >= smallEle[3].x && player.x <= (smallEle[3].x + 120) && player.y >= smallEle[3].y && player.y <= (smallEle[3].y + 86)) {
+        window.location.replace("lose.html");
+    }
+    if (player.x >= smallEle[4].x && player.x <= (smallEle[4].x + 120) && player.y >= smallEle[4].y && player.y <= (smallEle[4].y + 86)) {
+        window.location.replace("lose.html");
+    }
 
     //Updates positions based on velocity gained or lost. Velocity is pixels per frame
     player.x += player.xVelocity; player.xVelocity *= 0.9;
     player.y += player.yVelocity; player.yVelocity *= 0.9;
+    if (bigElephant.spawned) {
+        bigElephant.x += bigElephant.xVelocity; bigElephant.xVelocity *= 0.75;
+        bigElephant.y += bigElephant.yVelocity; bigElephant.yVelocity *= 0.75;
+    } else {
+        bigElephant.xVelocity = 0;
+        bigElephant.yVelocity = 0;
+    }
 
-    smallEle[0].x += smallEle[0].xVelocity; smallEle[0].xVelocity *= 0.85;//TODO: Make a game speed variable that correlates to the enemy speed
-    smallEle[0].y += smallEle[0].yVelocity; smallEle[0].yVelocity *= 0.85;
-    smallEle[1].x += smallEle[1].xVelocity; smallEle[1].xVelocity *= 0.85;
-    smallEle[1].y += smallEle[1].yVelocity; smallEle[1].yVelocity *= 0.85;
-    smallEle[2].x += smallEle[2].xVelocity; smallEle[2].xVelocity *= 0.85;
-    smallEle[2].y += smallEle[2].yVelocity; smallEle[2].yVelocity *= 0.85;
-    smallEle[3].x += smallEle[3].xVelocity; smallEle[3].xVelocity *= 0.85;
-    smallEle[3].y += smallEle[3].yVelocity; smallEle[3].yVelocity *= 0.85;
-    smallEle[4].x += smallEle[4].xVelocity; smallEle[4].xVelocity *= 0.85;
-    smallEle[4].y += smallEle[4].yVelocity; smallEle[4].yVelocity *= 0.85;
+    if (smallEle[0].spawned) {
+        smallEle[0].x += smallEle[0].xVelocity; smallEle[0].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[0].y += smallEle[0].yVelocity; smallEle[0].yVelocity *= 0.65; 
+    } else {
+        smallEle[0].xVelocity = 0;
+        smallEle[0].yVelocity = 0;
+    }
+    
+    if (smallEle[1].spawned) {
+        smallEle[1].x += smallEle[1].xVelocity; smallEle[1].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[1].y += smallEle[1].yVelocity; smallEle[1].yVelocity *= 0.65; 
+    } else {
+        smallEle[1].xVelocity = 0;
+        smallEle[1].yVelocity = 0;
+    }
+
+    if (smallEle[2].spawned) {
+        smallEle[2].x += smallEle[2].xVelocity; smallEle[2].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[2].y += smallEle[2].yVelocity; smallEle[2].yVelocity *= 0.65; 
+    } else {
+        smallEle[2].xVelocity = 0;
+        smallEle[2].yVelocity = 0;
+    }
+
+    if (smallEle[3].spawned) {
+        smallEle[3].x += smallEle[3].xVelocity; smallEle[3].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[3].y += smallEle[3].yVelocity; smallEle[3].yVelocity *= 0.65; 
+    } else {
+        smallEle[3].xVelocity = 0;
+        smallEle[3].yVelocity = 0;
+    }
+
+    if (smallEle[4].spawned) {
+        smallEle[4].x += smallEle[4].xVelocity; smallEle[4].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[4].y += smallEle[4].yVelocity; smallEle[4].yVelocity *= 0.65; 
+    } else {
+        smallEle[4].xVelocity = 0;
+        smallEle[4].yVelocity = 0;
+    }
 
     projectile.x += projectile.xVelocity;
     projectile.y += projectile.yVelocity;
@@ -237,6 +315,8 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
     context.drawImage(blueSmall, smallEle[2].x, smallEle[2].y, smallEle[2].width, smallEle[2].height);
     context.drawImage(greenSmall, smallEle[3].x, smallEle[3].y, smallEle[3].width, smallEle[3].height);
     context.drawImage(goldSmall, smallEle[4].x, smallEle[4].y, smallEle[4].width, smallEle[4].height);
+
+    context.drawImage(bigEle, bigElephant.x, bigElephant.y, bigElephant.width, bigElephant.height);
 
     context.fill();
     
