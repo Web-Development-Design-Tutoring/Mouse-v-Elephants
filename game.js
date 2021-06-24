@@ -199,7 +199,7 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
             eleDefeated += 1;
         }
 
-        if ((eleDefeated == 10 || eleDefeated == 20 || eleDefeated == 30) && bigElephant.spawned == false) {
+        if ((eleDefeated == 3 || eleDefeated == 6 || eleDefeated == 9) && bigElephant.spawned == false) {
             bigElephant.x = 640;
             bigElephant.y = -720;
             bigElephant.spawned = true;
@@ -248,48 +248,48 @@ const loop = function () {//GAMEPLAY LOGIC LOOP; Happens once per frame (60ish t
     player.x += player.xVelocity; player.xVelocity *= 0.9;
     player.y += player.yVelocity; player.yVelocity *= 0.9;
     if (bigElephant.spawned) {
-        bigElephant.x += bigElephant.xVelocity; bigElephant.xVelocity *= 0.75;
-        bigElephant.y += bigElephant.yVelocity; bigElephant.yVelocity *= 0.75;
+        bigElephant.x += bigElephant.xVelocity; bigElephant.xVelocity *= 0.9;
+        bigElephant.y += bigElephant.yVelocity; bigElephant.yVelocity *= 0.9;
     } else {
         bigElephant.xVelocity = 0;
         bigElephant.yVelocity = 0;
     }
 
     if (smallEle[0].spawned) {
-        smallEle[0].x += smallEle[0].xVelocity; smallEle[0].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
-        smallEle[0].y += smallEle[0].yVelocity; smallEle[0].yVelocity *= 0.65; 
+        smallEle[0].x += smallEle[0].xVelocity; smallEle[0].xVelocity *= 0.8;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[0].y += smallEle[0].yVelocity; smallEle[0].yVelocity *= 0.8; 
     } else {
         smallEle[0].xVelocity = 0;
         smallEle[0].yVelocity = 0;
     }
     
     if (smallEle[1].spawned) {
-        smallEle[1].x += smallEle[1].xVelocity; smallEle[1].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
-        smallEle[1].y += smallEle[1].yVelocity; smallEle[1].yVelocity *= 0.65; 
+        smallEle[1].x += smallEle[1].xVelocity; smallEle[1].xVelocity *= 0.8;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[1].y += smallEle[1].yVelocity; smallEle[1].yVelocity *= 0.8; 
     } else {
         smallEle[1].xVelocity = 0;
         smallEle[1].yVelocity = 0;
     }
 
     if (smallEle[2].spawned) {
-        smallEle[2].x += smallEle[2].xVelocity; smallEle[2].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
-        smallEle[2].y += smallEle[2].yVelocity; smallEle[2].yVelocity *= 0.65; 
+        smallEle[2].x += smallEle[2].xVelocity; smallEle[2].xVelocity *= 0.8;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[2].y += smallEle[2].yVelocity; smallEle[2].yVelocity *= 0.8; 
     } else {
         smallEle[2].xVelocity = 0;
         smallEle[2].yVelocity = 0;
     }
 
     if (smallEle[3].spawned) {
-        smallEle[3].x += smallEle[3].xVelocity; smallEle[3].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
-        smallEle[3].y += smallEle[3].yVelocity; smallEle[3].yVelocity *= 0.65; 
+        smallEle[3].x += smallEle[3].xVelocity; smallEle[3].xVelocity *= 0.8;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[3].y += smallEle[3].yVelocity; smallEle[3].yVelocity *= 0.8; 
     } else {
         smallEle[3].xVelocity = 0;
         smallEle[3].yVelocity = 0;
     }
 
     if (smallEle[4].spawned) {
-        smallEle[4].x += smallEle[4].xVelocity; smallEle[4].xVelocity *= 0.65;//TODO: Make a game speed variable that correlates to the enemy speed
-        smallEle[4].y += smallEle[4].yVelocity; smallEle[4].yVelocity *= 0.65; 
+        smallEle[4].x += smallEle[4].xVelocity; smallEle[4].xVelocity *= 0.8;//TODO: Make a game speed variable that correlates to the enemy speed
+        smallEle[4].y += smallEle[4].yVelocity; smallEle[4].yVelocity *= 0.8; 
     } else {
         smallEle[4].xVelocity = 0;
         smallEle[4].yVelocity = 0;
