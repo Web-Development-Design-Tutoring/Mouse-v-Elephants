@@ -1,4 +1,4 @@
 # Mouse-v-Elephants
 game 
-Made by Will & Connor
+\nMade by Will & Connor\n
 https://mouse-v-elephants.netlify.app/
